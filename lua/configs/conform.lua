@@ -9,6 +9,7 @@ local options = {
       "impl",
       "gotests",
       "goimports",
+      "dart_format",
       lsp_format = "last",
     },
     python = { "isort", "black" },

@@ -12,6 +12,8 @@ local servers = {
   "html",
   "cssls",
   "emmet_ls",
+  "jsonls",
+  "dartls",
 }
 
 -- Setup each LSP server

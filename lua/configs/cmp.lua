@@ -46,12 +46,12 @@ local options = {
   },
 
   sources = {
-    { name = "codeium", priority = 10000, keyword_length = 3 },
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
+    { name = "nvim_lsp", priority = 10000, keyword_length = 1 },
+    { name = "codeium" },
     { name = "buffer" },
-    { name = "nvim_lua" },
     { name = "path" },
+    -- { name = "luasnip" },
+    -- { name = "nvim_lua" },
   },
 }
 
