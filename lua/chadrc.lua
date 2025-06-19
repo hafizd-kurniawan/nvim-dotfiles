@@ -6,22 +6,27 @@
 local M = {}
 
 M.base46 = {
-  theme = "chadracula",
-  -- transparency = true,
-  -- hl_override = {
-  -- 	Comment = { italic = true },
-  -- 	["@comment"] = { italic = true },
-  -- },
+  theme = "catppuccin",
+  hl_override = {
+    Comment = { italic = true },
+    ["@comment"] = { italic = true },
+  },
+  integrations = {
+    "notify",
+    "cmp",
+    "lsp",
+    "treesitter",
+    "telescope",
+  },
 }
 
 -- M.nvdash = { load_on_startup = true }
--- M.ui = {
---       tabufline = {
---          lazyload = false
---      }
---}
-
 M.ui = {
+  tabufline = {
+    lazyload = false,
+    enabled = false,
+  },
+
   cmp = {
     lspkind_text = true,
     style = "default", -- default/flat_light/flat_dark/atom/atom_colored
@@ -29,7 +34,7 @@ M.ui = {
       tailwind = true,
     },
   },
-  telescope = { style = "borderless" },
+  telescope = { style = "bordered" },
 
   statusline = {
     theme = "default",

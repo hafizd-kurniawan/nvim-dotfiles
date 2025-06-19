@@ -31,7 +31,7 @@ return {
       callback = function()
         vim.notify(" ✅File saved: " .. vim.fn.expand "%:p", vim.log.levels.INFO, {
           title = "Save Notification",
-          timeout = 2000, -- waktu tampil (ms)
+          timeout = 100, -- waktu tampil (ms)
         })
       end,
     })

@@ -47,7 +47,7 @@ local options = {
 
   sources = {
     { name = "nvim_lsp", priority = 10000, keyword_length = 1 },
-    { name = "codeium" },
+    -- { name = "codeium" },
     { name = "buffer" },
     { name = "path" },
     -- { name = "luasnip" },
