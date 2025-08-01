@@ -21,6 +21,8 @@ return {
         "vimdoc",
         "html",
         "css",
+        "javascript",
+        "typescript",
         "php",
         "phpdoc",
         "python",
@@ -34,6 +36,15 @@ return {
         "yaml",
         "dockerfile",
         "ruby",
+        "rust",
+        "cpp",
+        "c",
+        "java",
+        "markdown",
+        "markdown_inline",
+        "regex",
+        "sql",
+        "xml",
       },
       highlight = { enable = true },
       indent = { enable = true },
@@ -218,6 +229,84 @@ return {
     lazy = false,
     dependencies = { "MunifTanjim/nui.nvim" },
     opts = {},
+  },
+  -- Additional useful plugins for Ubuntu development
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {}
+    end,
+  },
+  {
+    "numToStr/Comment.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("Comment").setup()
+    end,
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPre",
+    config = function()
+      require("gitsigns").setup {
+        signs = {
+          add = { text = "│" },
+          change = { text = "│" },
+          delete = { text = "_" },
+          topdelete = { text = "‾" },
+          changedelete = { text = "~" },
+          untracked = { text = "┆" },
+        },
+        current_line_blame = true,
+      }
+    end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPre",
+    config = function()
+      require("ibl").setup {
+        indent = { char = "│" },
+        scope = { enabled = false },
+      }
+    end,
+  },
+  {
+    "folke/todo-comments.nvim",
+    event = "BufReadPre",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("todo-comments").setup()
+    end,
+  },
+  {
+    "nvim-pack/nvim-spectre",
+    event = "VeryLazy",
+    config = function()
+      require("spectre").setup()
+    end,
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = "BufReadPre",
+    config = function()
+      require("illuminate").configure {
+        delay = 100,
+        large_file_cutoff = 2000,
+        large_file_overrides = {
+          providers = { "lsp" },
+        },
+      }
+    end,
   },
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },

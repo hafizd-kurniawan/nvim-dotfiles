@@ -1,0 +1,39 @@
+#!/bin/bash
+# Monitor setup script for Ubuntu
+# Automatically detects and configures monitors
+
+# Get list of connected monitors
+monitors=($(xrandr --query | grep " connected" | cut -d" " -f1))
+monitor_count=${#monitors[@]}
+
+# If only one monitor, set up workspaces on it
+if [ $monitor_count -eq 1 ]; then
+    bspc monitor ${monitors[0]} -d I II III IV V VI VII VIII IX X
+    echo "Single monitor setup: ${monitors[0]}"
+else
+    # Multi-monitor setup
+    primary_monitor=$(xrandr --query | grep " connected primary" | cut -d" " -f1)
+    
+    # If no primary monitor detected, use the first one
+    if [ -z "$primary_monitor" ]; then
+        primary_monitor=${monitors[0]}
+    fi
+    
+    # Set primary monitor with more workspaces
+    bspc monitor $primary_monitor -d I II III IV V VI
+    
+    # Set secondary monitors with fewer workspaces
+    for monitor in "${monitors[@]}"; do
+        if [ "$monitor" != "$primary_monitor" ]; then
+            bspc monitor $monitor -d VII VIII IX X
+        fi
+    done
+    
+    echo "Multi-monitor setup complete"
+    echo "Primary: $primary_monitor (I-VI)"
+    for monitor in "${monitors[@]}"; do
+        if [ "$monitor" != "$primary_monitor" ]; then
+            echo "Secondary: $monitor (VII-X)"
+        fi
+    done
+fi

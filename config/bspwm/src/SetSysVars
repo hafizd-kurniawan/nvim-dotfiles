@@ -1,0 +1,28 @@
+#!/bin/bash
+# System variables setup for polybar and other components
+
+# Get system information
+CURRENT_USER=$(whoami)
+HOSTNAME=$(hostname)
+KERNEL=$(uname -r)
+DISTRO=$(lsb_release -si 2>/dev/null || echo "Linux")
+DESKTOP_SESSION=${XDG_CURRENT_DESKTOP:-"BSPWM"}
+
+# Network interface detection
+WIFI_INTERFACE=$(ip route | grep default | grep -o 'dev [^[:space:]]*' | head -1 | cut -d' ' -f2)
+ETH_INTERFACE=$(ip route | grep default | grep -v "$WIFI_INTERFACE" | grep -o 'dev [^[:space:]]*' | head -1 | cut -d' ' -f2)
+
+# Create system info for polybar
+echo "SYSTEM_USER=$CURRENT_USER" > ~/.config/bspwm/src/system_vars
+echo "SYSTEM_HOSTNAME=$HOSTNAME" >> ~/.config/bspwm/src/system_vars
+echo "SYSTEM_KERNEL=$KERNEL" >> ~/.config/bspwm/src/system_vars
+echo "SYSTEM_DISTRO=$DISTRO" >> ~/.config/bspwm/src/system_vars
+echo "WIFI_INTERFACE=${WIFI_INTERFACE:-wlan0}" >> ~/.config/bspwm/src/system_vars
+echo "ETH_INTERFACE=${ETH_INTERFACE:-eth0}" >> ~/.config/bspwm/src/system_vars
+
+# Set timezone if not already set
+if [ -z "$TZ" ]; then
+    export TZ=$(timedatectl show --property=Timezone --value)
+fi
+
+echo "System variables initialized successfully"
