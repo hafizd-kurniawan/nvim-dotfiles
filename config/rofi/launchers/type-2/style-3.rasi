@@ -1,0 +1,153 @@
+/*
+ * ROFI Tokyo Night Theme
+ * Based on Tokyo Night color scheme
+ */
+
+* {
+    bg0:     #1a1b26;
+    bg1:     #24283b;
+    bg2:     #414868;
+    bg3:     #565f89;
+    fg0:     #c0caf5;
+    fg1:     #a9b1d6;
+    red:     #f7768e;
+    green:   #9ece6a;
+    yellow:  #e0af68;
+    blue:    #7aa2f7;
+    magenta: #bb9af7;
+    cyan:    #7dcfff;
+
+    accent: @blue;
+    urgent: @red;
+
+    background-color: transparent;
+    text-color: @fg0;
+    font: "JetBrains Mono Nerd Font 12";
+}
+
+window {
+    background-color: @bg0;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 10px;
+    width: 30%;
+    padding: 20px;
+}
+
+inputbar {
+    background-color: @bg1;
+    text-color: @fg0;
+    border-radius: 5px;
+    padding: 8px 16px;
+    spacing: 8px;
+    children: [ prompt, textbox-prompt-colon, entry ];
+}
+
+prompt {
+    text-color: @accent;
+    background-color: inherit;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+    text-color: @accent;
+    background-color: inherit;
+}
+
+entry {
+    text-color: inherit;
+    background-color: inherit;
+    placeholder-color: @bg3;
+}
+
+listview {
+    background-color: transparent;
+    margin: 12px 0 0;
+    lines: 8;
+    columns: 1;
+    fixed-height: false;
+}
+
+element {
+    background-color: transparent;
+    text-color: @fg1;
+    padding: 8px 16px;
+    spacing: 8px;
+    border-radius: 5px;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg1;
+}
+
+element normal.urgent {
+    background-color: @urgent;
+    text-color: @bg0;
+}
+
+element normal.active {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element selected.urgent {
+    background-color: @urgent;
+    text-color: @bg0;
+}
+
+element selected.active {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @fg1;
+}
+
+element alternate.urgent {
+    background-color: @urgent;
+    text-color: @bg0;
+}
+
+element alternate.active {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color: inherit;
+    size: 24px;
+    cursor: inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    cursor: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+}
+
+message {
+    background-color: @bg1;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @fg0;
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+}

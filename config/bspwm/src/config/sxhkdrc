@@ -1,0 +1,188 @@
+#  ███████╗██╗  ██╗██╗  ██╗██╗  ██╗██████╗ ██████╗  ██████╗
+#  ██╔════╝╚██╗██╔╝██║  ██║██║ ██╔╝██╔══██╗██╔══██╗██╔════╝
+#  ███████╗ ╚███╔╝ ███████║█████╔╝ ██║  ██║██████╔╝██║
+#  ╚════██║ ██╔██╗ ██╔══██║██╔═██╗ ██║  ██║██╔══██╗██║
+#  ███████║██╔╝ ██╗██║  ██║██║  ██╗██████╔╝██║  ██║╚██████╗
+#  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝ ╚═════╝
+#	hafizd-kurniawan (adapted from gh0stzk)
+#   Ubuntu-compatible sxhkd configuration
+#
+
+# Show help or open app menu
+alt + F1
+    rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi || dmenu_run
+
+############################
+# ----- Applications ----- #
+############################
+
+# Open Terminal (Normal & Floating)
+super + {_,alt + }Return
+    {alacritty, alacritty --class floating || kitty --class floating || gnome-terminal --class floating}
+
+# App launcher
+super + @space
+    rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-3.rasi || dmenu_run
+
+# Run prompt
+super + alt + @space
+    rofi -show run -theme ~/.config/rofi/launchers/type-2/style-3.rasi || dmenu_run
+
+# Apps (browser, editor, filemanager)
+super + {b,e,f}
+    {firefox || chromium-browser || google-chrome, nvim || code || gedit, thunar || nautilus || pcmanfm}
+
+# Terminal apps (file manager, nvim, music)
+super + {y,v,m}
+    {alacritty -e yazi || alacritty -e ranger, alacritty -e nvim, alacritty -e ncmpcpp || alacritty -e cmus}
+
+# System apps (volume control, system monitor, settings)
+super + {p,t,w}
+    {pavucontrol || pulseaudio-equalizer, gnome-system-monitor || htop, gnome-control-center || unity-control-center}
+
+# ----- Rofi Applets ----- #
+
+# Screenshot
+super + alt + s
+    flameshot gui || gnome-screenshot -i || scrot -s
+
+# PowerMenu
+super + alt + p
+    rofi -show p -modi p:~/.config/rofi/scripts/powermenu.sh -theme ~/.config/rofi/powermenu.rasi || \
+    echo -e "Lock\nLogout\nRestart\nShutdown" | rofi -dmenu -p "Power" | \
+    while read line; do \
+        case $line in \
+            Lock) i3lock || dm-tool lock;; \
+            Logout) bspc quit;; \
+            Restart) systemctl reboot;; \
+            Shutdown) systemctl poweroff;; \
+        esac \
+    done
+
+# Network Manager
+super + alt + n
+    nm-connection-editor || gnome-control-center network
+
+# Bluetooth
+super + alt + b
+    blueman-manager || gnome-control-center bluetooth
+
+# Clipboard
+super + alt + c
+    rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' || \
+    clipcat-menu || \
+    parcellite
+
+# jgmenu (right click context menu)
+~button3
+    jgmenu_run || xdg_menu --format pmenu | pmenu
+
+# Power off, Reboot, Log out, Lockscreen, kill an app
+ctrl + super + alt + {p,r,q,l,k}
+    {systemctl poweroff, systemctl reboot, bspc quit, i3lock || dm-tool lock, xkill}
+
+# Manage brightness (for laptops)
+XF86MonBrightness{Up,Down}
+    brightnessctl s {+10%,-10%} || xbacklight -{inc,dec} 10
+
+# Volume control
+XF86Audio{RaiseVolume,LowerVolume,Mute}
+    pactl set-sink-volume @DEFAULT_SINK@ {+5%,-5%,toggle} || \
+    amixer set Master {5%+,5%-,toggle}
+
+# Music Control
+XF86Audio{Next,Prev,Play,Stop}
+    playerctl {next,previous,play-pause,stop} || \
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.{Next,Previous,PlayPause,Stop}
+
+#####################
+# ----- Bspwm ----- #
+#####################
+
+# Reload BSPWM
+super + alt + r
+    bspc wm -r && notify-send "BSPWM" "Configuration reloaded"
+
+# Close/Kill node
+super + {_,shift + }x
+    bspc node -{c,k}
+
+# Reload sxhkd Keybinds
+super + Escape
+    pkill -USR1 -x sxhkd && notify-send "sxhkd" "Configuration reloaded"
+
+# ----- Node states and flags ----- #
+
+# Set the node state
+alt + {t,shift + t,a,f}
+    bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# Set the node flags
+alt + {m,x,s,p,h}
+    bspc node -g {marked,locked,sticky,private,hidden}
+
+# Show hidden nodes one by one
+ctrl + alt + h
+    bspc node $(bspc query -N -n .hidden.local.window | head -n1) --flag hidden=off
+
+# ----- Focus/Swap Nodes ----- #
+
+# Rotate desktop
+ctrl + Tab
+    bspc node @/ --rotate {90,-90}
+
+# Switch workspace
+super + {Left,Right}
+    bspc desktop -f {prev,next}
+
+# Focus or send to the given desktop
+super + {_,ctrl + }{1-9,0}
+    bspc {desktop -f,node -d} '^{1-9,10}'
+
+# Send focused Node to workspace directionally
+super + ctrl + {Left,Right}
+    bspc node -d {prev,next} '--follow'
+
+# Focus the node in the given direction
+super + alt + {Left,Down,Up,Right}
+    bspc node -f {west,south,north,east}
+
+# Swap the node in the given direction
+ctrl + alt + {Left,Down,Up,Right}
+    bspc node -s {west,south,north,east}
+
+# Focus the last node/desktop
+alt + {grave,Tab}
+    bspc {node,desktop} -f last
+
+# Preselect the direction
+super + ctrl + {h,v,q}
+    bspc node -p {east,south,cancel}
+
+# ----- Move/Resize Nodes ----- #
+
+# Expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Move floating window
+super + shift + {Left,Down,Up,Right}
+    bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Balance tree
+super + ctrl + b
+    bspc node @/ -B
+
+# ----- Multi operation functions ----- #
+
+# Close all nodes in current desktop
+super + ctrl + x
+    bspc query -N -d | xargs -I id -n 1 bspc node id -c
+
+# Hide/unhide polybar
+super + alt + {h,u}
+    polybar-msg cmd {hide,show} || killall -SIGUSR1 polybar
