@@ -249,9 +249,15 @@ create_wallpaper_dir() {
     # Download a default wallpaper if none exists
     if [ ! -f "$HOME/.config/bspwm/wallpapers/default.jpg" ]; then
         info "Downloading default wallpaper..."
-        curl -o "$HOME/.config/bspwm/wallpapers/default.jpg" \
-            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop" \
-            || warning "Failed to download default wallpaper"
+        curl -L -o "$HOME/.config/bspwm/wallpapers/default.jpg" \
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&crop=center" \
+            2>/dev/null || {
+                warning "Failed to download default wallpaper, creating placeholder"
+                # Create a simple solid color wallpaper using ImageMagick if available
+                if command -v convert >/dev/null 2>&1; then
+                    convert -size 1920x1080 xc:"#1a1b26" "$HOME/.config/bspwm/wallpapers/default.jpg"
+                fi
+            }
     fi
 }
 

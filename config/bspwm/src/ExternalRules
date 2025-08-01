@@ -1,0 +1,83 @@
+#!/bin/bash
+# External rules for BSPWM
+
+wid=$1
+class=$2
+instance=$3
+consequences=$4
+
+# Application-specific rules for Ubuntu
+case "$class" in
+    "Alacritty")
+        if [[ "$instance" == "floating" ]]; then
+            echo "state=floating center=true"
+        fi
+        ;;
+    "kitty")
+        if [[ "$instance" == "floating" ]]; then
+            echo "state=floating center=true"
+        fi
+        ;;
+    "Gnome-terminal")
+        if [[ "$instance" == "floating" ]]; then
+            echo "state=floating center=true"
+        fi
+        ;;
+    "Rofi")
+        echo "state=floating center=true"
+        ;;
+    "Pavucontrol")
+        echo "state=floating center=true"
+        ;;
+    "Nm-connection-editor")
+        echo "state=floating center=true"
+        ;;
+    "Blueman-manager")
+        echo "state=floating center=true"
+        ;;
+    "Gnome-control-center")
+        echo "state=floating center=true"
+        ;;
+    "Gnome-system-monitor")
+        echo "state=floating center=true"
+        ;;
+    "Flameshot")
+        echo "state=floating focus=false"
+        ;;
+    "firefox")
+        echo "desktop=^2"
+        ;;
+    "Chromium"|"Google-chrome")
+        echo "desktop=^2"
+        ;;
+    "Code"|"code-oss")
+        echo "desktop=^3"
+        ;;
+    "Gedit"|"Mousepad")
+        echo "desktop=^3"
+        ;;
+    "Thunar"|"Nautilus"|"Pcmanfm")
+        echo "desktop=^4"
+        ;;
+    "Gimp-2.10"|"Gimp")
+        echo "desktop=^5 state=floating"
+        ;;
+    "Spotify"|"spotify")
+        echo "desktop=^6"
+        ;;
+    "Discord"|"discord")
+        echo "desktop=^6"
+        ;;
+    "obs"|"Obs")
+        echo "desktop=^7"
+        ;;
+    "VirtualBox Manager"|"VirtualBox Machine")
+        echo "desktop=^8"
+        ;;
+    "Steam")
+        echo "desktop=^9"
+        ;;
+    "Transmission-gtk")
+        echo "desktop=^10"
+        ;;
+esac

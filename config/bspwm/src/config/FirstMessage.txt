@@ -1,0 +1,48 @@
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║                                                                  ║
+  ║                 🎉 Welcome to Ubuntu BSPWM Setup! 🎉           ║
+  ║                                                                  ║
+  ║  This is your first time running BSPWM with these dotfiles.     ║
+  ║  Here are some essential keybindings to get you started:        ║
+  ║                                                                  ║
+  ║  ⌨️  ESSENTIAL KEYBINDINGS:                                     ║
+  ║                                                                  ║
+  ║  🖥️  Super + Return          ▶ Open terminal                   ║
+  ║  🚀 Super + Space            ▶ Application launcher (rofi)     ║
+  ║  ❌ Super + Shift + X        ▶ Kill focused window             ║
+  ║  🔄 Super + Alt + R          ▶ Reload BSPWM                    ║
+  ║  ⚙️  Super + Escape          ▶ Reload keybindings             ║
+  ║                                                                  ║
+  ║  📋 WORKSPACE NAVIGATION:                                       ║
+  ║                                                                  ║
+  ║  🔢 Super + [1-9,0]          ▶ Switch to workspace 1-10       ║
+  ║  📦 Super + Ctrl + [1-9,0]   ▶ Move window to workspace       ║
+  ║  ⬅️  Super + Left/Right       ▶ Previous/Next workspace        ║
+  ║                                                                  ║
+  ║  🎯 WINDOW MANAGEMENT:                                          ║
+  ║                                                                  ║
+  ║  🧭 Super + Alt + Arrow Keys ▶ Focus window in direction       ║
+  ║  🔄 Ctrl + Alt + Arrow Keys  ▶ Swap windows                    ║
+  ║  🪟 Alt + T/F/S              ▶ Tiled/Floating/Fullscreen       ║
+  ║                                                                  ║
+  ║  🚀 QUICK APPS:                                                 ║
+  ║                                                                  ║
+  ║  🌐 Super + B                ▶ Browser (Firefox)               ║
+  ║  📝 Super + E                ▶ Editor (Neovim)                 ║
+  ║  📁 Super + F                ▶ File Manager (Thunar)           ║
+  ║  📸 Super + Alt + S          ▶ Screenshot                      ║
+  ║  ⚡ Super + Alt + P          ▶ Power menu                      ║
+  ║                                                                  ║
+  ║  💡 TIP: Press Alt + F1 for help anytime!                      ║
+  ║                                                                  ║
+  ║  📚 For more keybindings, check:                               ║
+  ║     ~/.config/sxhkd/sxhkdrc                                     ║
+  ║                                                                  ║
+  ║  🎨 Customize your setup:                                       ║
+  ║     https://github.com/hafizd-kurniawan/nvim-dotfiles          ║
+  ║                                                                  ║
+  ║                        Enjoy your new setup! 🚀                ║
+  ║                                                                  ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+Press Enter to continue...

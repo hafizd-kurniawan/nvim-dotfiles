@@ -13,7 +13,6 @@ vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jj", "<ESC>", opts)
 map("i", "jk", "<ESC>", opts)
-map("i", "jk", "<ESC>")
 
 -- Panes resizing
 map("n", "+", ":resize +5<CR>", opts)
@@ -35,15 +34,34 @@ map("v", ">", ">gv")
 map({ "n", "x", "o" }, "H", "^", opts)
 map({ "n", "x", "o" }, "L", "g_", opts)
 
+-- Additional useful mappings for Ubuntu BSPWM setup
+-- Quick save
+map("n", "<C-s>", ":w<CR>", { desc = "Save file" })
+map("i", "<C-s>", "<ESC>:w<CR>a", { desc = "Save file" })
+
+-- Better scrolling
+map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+
+-- Clear search highlighting
+map("n", "<Esc>", ":noh<CR>", { desc = "Clear search highlights" })
+
+-- Stay in indent mode
+map("v", "<", "<gv", { desc = "Indent left" })
+map("v", ">", ">gv", { desc = "Indent right" })
+
+-- Replace word under cursor
+map("n", "<leader>rw", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", { desc = "Replace word under cursor" })
+
+-- Spectre (search and replace)
+map("n", "<leader>S", "<cmd>Spectre<CR>", { desc = "Open Spectre" })
+map("n", "<leader>sw", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", { desc = "Search current word" })
+map("v", "<leader>sw", "<cmd>lua require('spectre').open_visual()<CR>", { desc = "Search current word" })
+map("n", "<leader>sp", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", { desc = "Search on current file" })
+
 -- telescope
--- map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
-map(
-  "n",
-  "<leader>fp",
-  "<cmd>Telescope lsp_document_symbols<CR>",
-  { desc = "Find document symbols (class, function, method)" }
-)
+map("n", "<leader>fp", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "Find document symbols" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
@@ -57,12 +75,21 @@ map("n", "<leader>th", function()
 end, { desc = "telescope nvchad themes" })
 
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
-map(
-  "n",
-  "<leader>fa",
-  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-  { desc = "telescope find all files" }
-)
+map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
+
+-- Git keymaps
+map("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", { desc = "Git blame line" })
+map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Preview hunk" })
+map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
+map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
+map("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<CR>", { desc = "Undo stage hunk" })
+map("n", "<leader>gd", "<cmd>Gitsigns diffthis<CR>", { desc = "Diff this" })
+
+-- Comment.nvim integration
+map("n", "<leader>/", function()
+  require("Comment.api").toggle.linewise.current()
+end, { desc = "Toggle comment" })
+map("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comment" })
 
 if vim.env.TMUX then
   map("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", opts)
@@ -93,18 +120,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.json", "*.jsonc", "*.arb" },
---   -- enable wrap mode for json files only
---   command = "setlocal wrap",
--- })
--- -- Flutter .arb files should be concidered as json files
--- vim.filetype.add {
---   extension = {
---     arb = "json",
---   },
--- }
---
 vim.schedule(function()
   local present, wk = pcall(require, "which-key")
   if not present then
@@ -143,6 +158,15 @@ vim.schedule(function()
       l = { "<cmd>Trouble loclist<cr>", "LocationList" },
       w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
       t = { "<cmd>TodoTelescope<cr>", "TODO List" },
+    },
+    g = {
+      name = "+Git",
+      b = { "<cmd>Gitsigns blame_line<CR>", "Blame line" },
+      p = { "<cmd>Gitsigns preview_hunk<CR>", "Preview hunk" },
+      r = { "<cmd>Gitsigns reset_hunk<CR>", "Reset hunk" },
+      s = { "<cmd>Gitsigns stage_hunk<CR>", "Stage hunk" },
+      u = { "<cmd>Gitsigns undo_stage_hunk<CR>", "Undo stage hunk" },
+      d = { "<cmd>Gitsigns diffthis<CR>", "Diff this" },
     },
   }, { prefix = "<leader>" })
 end)
